@@ -1,19 +1,38 @@
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 
+// ts-begin
+const props = withDefaults(
+    defineProps<{
+        align?: 'left' | 'right';
+        width?: '48';
+        contentClasses?: string;
+    }>(),
+    {
+        align: 'right',
+        width: '48',
+        contentClasses: 'py-1 bg-white dark:bg-gray-700',
+    }
+);
+// ts-end
+// js-begin
 const props = defineProps({
     align: {
+        type: String,
         default: 'right',
     },
     width: {
+        type: String,
         default: '48',
     },
     contentClasses: {
-        default: () => ['py-1', 'bg-white dark:bg-gray-700'],
+        type: String,
+        default: 'py-1 bg-white dark:bg-gray-700',
     },
 });
+// js-end
 
-const closeOnEscape = (e) => {
+const closeOnEscape = (e/* ts-begin */: KeyboardEvent/* ts-end */) => {
     if (open.value && e.key === 'Escape') {
         open.value = false;
     }
